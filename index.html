@@ -21,14 +21,14 @@
              transition" />
 
     <div class="flex flex-wrap gap-3">
-      <input id="min" type="number" value="3" placeholder="حداقل" class="w-full sm:w-1/2 p-3 border-2 border-gray-300 rounded-lg text-lg
-               bg-white placeholder-gray-400
-               focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200
-               transition" />
-      <input id="max" type="number" value="7" placeholder="حداکثر" class="w-full sm:w-1/2 p-3 border-2 border-gray-300 rounded-lg text-lg
-               bg-white placeholder-gray-400
-               focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200
-               transition" />
+      <input id="min" type="number" value="3" placeholder="حداقل" class="w-full p-3 border-2 border-gray-300 rounded-lg text-lg
+      bg-white placeholder-gray-400
+      focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200
+      transition" />
+      <input id="max" type="number" value="7" placeholder="حداکثر" class="w-full p-3 border-2 border-gray-300 rounded-lg text-lg
+      bg-white placeholder-gray-400
+      focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200
+      transition" />
     </div>
 
     <button onclick="filter()" class="w-full py-3 rounded-lg text-lg font-semibold
@@ -62,15 +62,15 @@
     }
 
     function filter() {
-      const a = normalize(allowed.value.trim());
-      const min = +min.value;
-      const max = +max.value;
+      const a = normalize(document.getElementById('allowed').value.trim());
+      const minVal = +document.getElementById('min').value;
+      const maxVal = +document.getElementById('max').value;
       const cnt = {};
       const res = [];
       for (const c of a) cnt[c] = (cnt[c] || 0) + 1;
       for (const w0 of words) {
         const w = normalize(w0);
-        if (w.length < min || w.length > max) continue;
+        if (w.length < minVal || w.length > maxVal) continue;
         let ok = true;
         const used = {};
         for (const c of w) {
@@ -79,7 +79,7 @@
         }
         if (ok) res.push(w);
       }
-      out.innerHTML = res.length
+      document.getElementById('out').innerHTML = res.length
         ? res.map(w => `<li>${w}</li>`).join('')
         : '<li>موردی پیدا نشد</li>';
     }
