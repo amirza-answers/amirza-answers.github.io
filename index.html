@@ -5,42 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>فیلتر کلمات | ابزار بازی امیرزا</title>
 
-  <!-- Standard favicon -->
+  <!-- icons -->
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-
-  <!-- Apple Touch Icon -->
   <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-
-  <!-- Android / Windows -->
   <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png">
 
-  <!-- Web manifest (optional for PWA) -->
+  <!-- PWA manifest & theme -->
   <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#2563eb">
 
-  <meta name="description" content="فیلتر کلمات برای بازی‌هایی مثل امیرزا، استاد میرزا، رقابت آنلاین. پیدا کردن کلمات معتبر با حروف دلخواه برای حل سریع مراحل." />
-  <meta name="keywords" content="جواب امیرزا, فیلتر کلمات امیرزا, رقابت روزانه, استاد میرزا, مت پاسخ, جواب باقلوا, حل مرحله امیرزا, پاسخ امیرزا امروز, جواب بازی کلمات, حل کلمه, کلمه‌ساز آنلاین, کلمه‌یاب فارسی, امیرزا امروز, پاسخ رقابت آنلاین, ابزار حل امیرزا, کلمات بازی امیرزا, فیلتر کلمات فارسی, جواب امیرزا امروز, راهنمای امیرزا, رقابت استاد میرزا" />
-  <meta name="robots" content="index, follow" />
+  <meta name="description" content="فیلتر کلمات برای بازی‌هایی مثل امیرزا، استاد میرزا، رقابت آنلاین." />
   <meta name="author" content="Mehdi Dalvand" />
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
   <script src="/tailwindcss.js"></script>
 </head>
 <body class="bg-gray-100 p-4 font-sans">
-  <!-- Modal -->
+
+  <!-- iOS install hint -->
+  <div id="ios-install" class="fixed bottom-0 left-0 right-0 bg-blue-50 p-4 text-center hidden">
+    <p class="mb-2 text-sm">
+      برای افزودن به صفحه اصلی: روی دکمه اشتراک ↗ در پایین بزنید و «Add to Home Screen» را انتخاب کنید.
+    </p>
+    <button onclick="document.getElementById('ios-install').remove()" class="text-blue-600 font-semibold">فهمیدم</button>
+  </div>
+
+  <!-- SEO / feature modal -->
   <div id="seo-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-xl max-w-md w-full p-6 space-y-4 shadow-xl">
       <h2 class="text-xl font-bold text-center">راهنمای ابزار فیلتر کلمات</h2>
       <div class="text-gray-700 text-sm leading-7 bg-blue-50 border border-blue-200 rounded-lg p-4">
-  <p class="mb-2">
-    این ابزار برای فیلتر کلمات در بازی‌هایی مثل <strong class="text-blue-700">امیرزا</strong>
-    <span class="text-gray-600">(<strong>استاد میرزا</strong>، <strong>رقابت آنلاین</strong>، <strong>بازی روزانه</strong>)</span>
-    و همچنین <strong class="text-blue-700">باقلوا</strong> طراحی شده است.
-  </p>
-  <p>
-    کافی‌ست حروف دلخواه را وارد کرده و حداقل و حداکثر طول کلمه را انتخاب کنید تا کلمات معتبر برای حل مرحله نمایش داده شوند.
-    این ابزار مناسب برای <strong>بازی‌های واژه‌سازی</strong> است.
-  </p>
-</div>
+        <p class="mb-2">
+          این ابزار برای فیلتر کلمات در بازی‌هایی مثل <strong class="text-blue-700">امیرزا</strong>
+          (<strong>استاد میرزا</strong>، <strong>رقابت آنلاین</strong>، <strong>بازی روزانه</strong>)
+          و همچنین <strong class="text-blue-700">باقلوا</strong> طراحی شده است.
+        </p>
+        <p>
+          کافی‌ست حروف دلخواه را وارد کرده و حداقل و حداکثر طول کلمه را انتخاب کنید تا کلمات معتبر نمایش داده شوند.
+        </p>
+      </div>
       <div class="flex items-center gap-2">
         <input type="checkbox" id="hide-modal" class="w-5 h-5">
         <label for="hide-modal" class="text-sm text-gray-600">دیگر نمایش داده نشود</label>
@@ -49,68 +52,88 @@
     </div>
   </div>
 
-  <div class="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 space-y-6">
+  <!-- Main app container -->
+  <div id="app" class="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 space-y-6">
     <h1 class="text-2xl font-bold text-center">فیلتر کلمات امیرزا</h1>
 
-    <input id="allowed" placeholder="حروف مجاز" class="w-full p-3 border rounded-lg text-lg bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+    <input
+      id="allowed"
+      placeholder="حروف مجاز"
+      class="w-full p-3 border rounded-lg text-lg bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+    />
 
     <div class="flex flex-col sm:flex-row gap-4">
-      <div class="flex items-center justify-between flex-1 border rounded-lg overflow-hidden" id="min-wrapper">
+      <div id="min-wrapper" class="flex items-center justify-between flex-1 border rounded-lg overflow-hidden">
         <button onclick="step('min', -1)" class="w-12 h-12 bg-gray-200 hover:bg-gray-300 text-xl">−</button>
         <input id="min" type="number" value="3" oninput="validateMinMax()" class="text-center w-full h-12 text-lg outline-none" />
         <button onclick="step('min', 1)" class="w-12 h-12 bg-gray-200 hover:bg-gray-300 text-xl">+</button>
       </div>
-
-      <div class="flex items-center justify-between flex-1 border rounded-lg overflow-hidden" id="max-wrapper">
+      <div id="max-wrapper" class="flex items-center justify-between flex-1 border rounded-lg overflow-hidden">
         <button onclick="step('max', -1)" class="w-12 h-12 bg-gray-200 hover:bg-gray-300 text-xl">−</button>
         <input id="max" type="number" value="7" oninput="validateMinMax()" class="text-center w-full h-12 text-lg outline-none" />
         <button onclick="step('max', 1)" class="w-12 h-12 bg-gray-200 hover:bg-gray-300 text-xl">+</button>
       </div>
     </div>
 
-    <button id="run-btn" onclick="filter()" class="w-full py-3 rounded-lg text-lg font-semibold bg-blue-600 text-white shadow hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 transition">
+    <button
+      id="run-btn"
+      onclick="filter()"
+      class="w-full py-3 rounded-lg text-lg font-semibold bg-blue-600 text-white shadow hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
+    >
       اجرا
     </button>
 
-    <ul id="out" class="list-decimal list-inside bg-gray-50 text-base rounded-lg p-4 h-72 overflow-y-auto break-words space-y-1 border border-gray-200"></ul>
+    <ul
+      id="out"
+      class="list-decimal list-inside bg-gray-50 text-base rounded-lg p-4 h-72 overflow-y-auto break-words space-y-1 border border-gray-200"
+    ></ul>
   </div>
 
+  <!-- PWA install button -->
+  <button
+    id="install-btn"
+    class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white py-2 px-4 rounded-lg hidden"
+  >
+    افزودن به صفحه اصلی
+  </button>
+
+  <!-- Scripts -->
   <script>
+    // Load word list
     let words = [];
     fetch('/words')
-    .then(r => r.text())
-    .then(text => words = text.split('\n').map(w => w.trim()).filter(Boolean));
+      .then(r => r.text())
+      .then(text => words = text.split('\n').map(w => w.trim()).filter(Boolean));
 
+    // Normalize Persian letters
     function normalize(s) {
       return s
         .replace(/[إأآٱ]/g, 'ا')
         .replace(/ك/g, 'ک')
         .replace(/[يئ]/g, 'ی')
         .replace(/ؤ/g, 'و')
-        .replace(/ۀ/g, 'ه')
-        .replace(/ة/g, 'ه')
+        .replace(/ۀ|ة/g, 'ه')
         .replace(/[ًٌٍَُِّْ]/g, '')
         .replace(/‌/g, '');
     }
 
+    // Increment/decrement handlers
     function step(id, delta) {
       const el = document.getElementById(id);
       el.value = Math.max(0, (+el.value || 0) + delta);
       validateMinMax();
     }
 
+    // Validate min < max
     function validateMinMax() {
       const minEl = document.getElementById('min');
       const maxEl = document.getElementById('max');
       const runBtn = document.getElementById('run-btn');
       const minWrapper = document.getElementById('min-wrapper');
       const maxWrapper = document.getElementById('max-wrapper');
-
       const min = +minEl.value;
       const max = +maxEl.value;
-
       const valid = min < max;
-
       minWrapper.classList.toggle('border-red-500', !valid);
       maxWrapper.classList.toggle('border-red-500', !valid);
       runBtn.disabled = !valid;
@@ -118,6 +141,7 @@
       runBtn.classList.toggle('cursor-not-allowed', !valid);
     }
 
+    // Filter words based on allowed letters and length
     function filter() {
       const a = normalize(document.getElementById('allowed').value.trim());
       const minVal = +document.getElementById('min').value;
@@ -141,9 +165,11 @@
         : '<li>موردی پیدا نشد</li>';
     }
 
+    // Close the SEO modal
     function closeModal() {
-      const dontShow = document.getElementById('hide-modal').checked;
-      if (dontShow) localStorage.setItem('amirza-seo-modal', 'hide');
+      if (document.getElementById('hide-modal').checked) {
+        localStorage.setItem('amirza-seo-modal', 'hide');
+      }
       document.getElementById('seo-modal').classList.add('hidden');
     }
 
@@ -153,6 +179,36 @@
       }
       validateMinMax();
     });
+
+    // PWA beforeinstallprompt handling
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
+
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+    });
+
+    installBtn.addEventListener('click', async () => {
+      installBtn.style.display = 'none';
+      deferredPrompt.prompt();
+      deferredPrompt = null;
+    });
+
+    // iOS install hint logic
+    const isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+    const isInStandalone = ('standalone' in navigator) && navigator.standalone;
+    if (isIos && !isInStandalone) {
+      document.getElementById('ios-install').classList.remove('hidden');
+    }
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('SW registered'))
+        .catch(err => console.error('SW error:', err));
+    }
   </script>
 </body>
 </html>
