@@ -4,16 +4,20 @@
 const CACHE_NAME = 'amirza-cache-v2';
 
 // Files to precache
-const ASSETS = [
-  '/',                   // resolves to index.html
-  '/index.html',
-  '/tailwindcss.js',
-  '/styles.css',         // if you have a separate stylesheet
-  '/icons/favicon-16x16.png',
-  '/icons/favicon-32x32.png',
-  '/icons/apple-touch-icon.png',
-  '/icons/android-chrome-192x192.png',
-  '/icons/android-chrome-512x512.png'
+const FILES_TO_CACHE = [
+  "/",
+  "/index.html",
+  "/words",
+  "/dist/assets/css/styles.css",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png",
+  "/manifest.json",
+  "/site.webmanifest",
+  "/icons/favicon-32x32.png",
+  "/icons/favicon-16x16.png",
+  "/icons/apple-touch-icon.png",
+  "/icons/android-chrome-192x192.png",
+  // Add more static assets if needed
 ];
 
 // Install: open the cache and store all ASSETS
