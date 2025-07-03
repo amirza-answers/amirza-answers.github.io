@@ -4,12 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>فیلتر کلمات | ابزار بازی امیرزا</title>
+
+  <!-- Standard favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+
+  <!-- Android / Windows -->
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png">
+
+  <!-- Web manifest (optional for PWA) -->
+  <link rel="manifest" href="/site.webmanifest">
+
   <meta name="description" content="فیلتر کلمات برای بازی‌هایی مثل امیرزا، استاد میرزا، رقابت آنلاین. پیدا کردن کلمات معتبر با حروف دلخواه برای حل سریع مراحل." />
   <meta name="keywords" content="جواب امیرزا, فیلتر کلمات امیرزا, رقابت روزانه, استاد میرزا, مت پاسخ, جواب باقلوا, حل مرحله امیرزا, پاسخ امیرزا امروز, جواب بازی کلمات, حل کلمه, کلمه‌ساز آنلاین, کلمه‌یاب فارسی, امیرزا امروز, پاسخ رقابت آنلاین, ابزار حل امیرزا, کلمات بازی امیرزا, فیلتر کلمات فارسی, جواب امیرزا امروز, راهنمای امیرزا, رقابت استاد میرزا" />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Mehdi Dalvand" />
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-  <script src="tailwindcss.js"></script>
+  <script src="/tailwindcss.js"></script>
 </head>
 <body class="bg-gray-100 p-4 font-sans">
   <!-- Modal -->
@@ -63,7 +77,7 @@
 
   <script>
     let words = [];
-    fetch('words')
+    fetch('/words')
     .then(r => r.text())
     .then(text => words = text.split('\n').map(w => w.trim()).filter(Boolean));
 
