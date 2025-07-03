@@ -1,66 +1,86 @@
-const CACHE_NAME = "amirza-pwa-cache-v1";
+// sw.js
 
-const FILES_TO_CACHE = [
-  "/",
-  "/index.html",
-  "/words",
-  "/dist/assets/css/styles.css",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
-  "/manifest.json",
-  "/site.webmanifest",
-  "/icons/favicon-32x32.png",
-  "/icons/favicon-16x16.png",
-  "/icons/apple-touch-icon.png",
-  "/icons/android-chrome-192x192.png",
-  // Add more static assets if needed
+// Cache version — bump this on every change so clients update
+const CACHE_NAME = 'amirza-cache-v2';
+
+// Files to precache
+const ASSETS = [
+  '/',                   // resolves to index.html
+  '/index.html',
+  '/tailwindcss.js',
+  '/styles.css',         // if you have a separate stylesheet
+  '/icons/favicon-16x16.png',
+  '/icons/favicon-32x32.png',
+  '/icons/apple-touch-icon.png',
+  '/icons/android-chrome-192x192.png',
+  '/icons/android-chrome-512x512.png'
 ];
 
-// Install event: cache static files
-self.addEventListener("install", event => {
-  console.log("[Service Worker] Install");
+// Install: open the cache and store all ASSETS
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      console.log("[Service Worker] Caching app shell");
-      return cache.addAll(FILES_TO_CACHE);
-    })
-  );
-  self.skipWaiting();
-});
-
-// Activate event: cleanup old caches
-self.addEventListener("activate", event => {
-  console.log("[Service Worker] Activate");
-  event.waitUntil(
-    caches.keys().then(keyList => {
-      return Promise.all(
-        keyList.map(key => {
-          if (key !== CACHE_NAME) {
-            console.log("[Service Worker] Removing old cache", key);
-            return caches.delete(key);
+    caches.open(CACHE_NAME)
+      .then(async cache => {
+        for (const url of ASSETS) {
+          try {
+            await cache.add(url);
+          } catch (err) {
+            console.warn('Failed to cache', url, err);
           }
-        })
-      );
-    })
+        }
+      })
+      .then(() => self.skipWaiting())
   );
-  self.clients.claim();
 });
 
-// Fetch event: serve from cache, fallback to index.html for navigation
-self.addEventListener("fetch", event => {
-  if (event.request.mode === "navigate") {
-    // Always return index.html for navigations
+// Activate: delete old caches
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys
+          .filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
+      )
+    ).then(() => self.clients.claim())
+  );
+});
+
+// Fetch: 
+//  - For navigation (i.e. URL bar or link clicks), try network first; if it fails, serve cached index.html
+//  - For other requests, try cache-first, then network
+self.addEventListener('fetch', event => {
+  const req = event.request;
+
+  // Only handle GET requests
+  if (req.method !== 'GET') return;
+
+  // Navigation request?
+  if (req.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => {
-        return caches.match("/index.html");
-      })
+      fetch(req)
+        .then(res => {
+          // Optionally update the cached index.html in background
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put('/index.html', copy));
+          return res;
+        })
+        .catch(() => caches.match('/index.html'))
     );
-  } else {
-    // For other requests, try cache first
-    event.respondWith(
-      caches.match(event.request).then(response => {
-        return response || fetch(event.request);
-      })
-    );
+    return;
   }
+
+  // Non-navigation: try cache first
+  event.respondWith(
+    caches.match(req).then(cached => {
+      if (cached) {
+        return cached;
+      }
+      return fetch(req).then(networkRes => {
+        // Optionally cache new resources:
+        // caches.open(CACHE_NAME).then(cache => cache.put(req, networkRes.clone()));
+        return networkRes;
+      });
+    })
+  );
 });
