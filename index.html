@@ -71,11 +71,12 @@
       return s
         .replace(/[إأآٱ]/g, 'ا')
         .replace(/ك/g, 'ک')
-        .replace(/ي/g, 'ی')
+        .replace(/[يئ]/g, 'ی')
         .replace(/ؤ/g, 'و')
-        .replace(/[ئۀ]/g, 'ه')
+        .replace(/ۀ/g, 'ه')
         .replace(/ة/g, 'ه')
-        .replace(/[ًٌٍَُِّْ]/g, '');
+        .replace(/[ًٌٍَُِّْ]/g, '')
+        .replace(/‌/g, '');
     }
 
     function step(id, delta) {
