@@ -63,9 +63,9 @@
 
   <script>
     let words = [];
-    fetch('words.json')
-      .then(r => r.json())
-      .then(data => words = data);
+    fetch('words')
+    .then(r => r.text())
+    .then(text => words = text.split('\n').map(w => w.trim()).filter(Boolean));
 
     function normalize(s) {
       return s
