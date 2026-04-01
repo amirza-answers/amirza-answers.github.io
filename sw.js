@@ -1,7 +1,7 @@
 // sw.js
 
 // 1. Cache version — bump this on every change so clients update
-const CACHE_NAME = 'amirza-cache-v3';
+const CACHE_NAME = 'amirza-cache-v4';
 
 // 2. Files to precache (including your /words endpoint)
 const FILES_TO_CACHE = [
@@ -9,9 +9,6 @@ const FILES_TO_CACHE = [
   "/index.html",
   "/words",                        // your word list endpoint
   "/dist/assets/css/styles.css",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
-  "/manifest.json",
   "/site.webmanifest",
   "/icons/favicon-32x32.png",
   "/icons/favicon-16x16.png",
