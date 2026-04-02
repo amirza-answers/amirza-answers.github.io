@@ -1,6 +1,6 @@
 {
-  "name": "فیلتر کلمات امیرزا",
-  "short_name": "امیرزا",
+  "name": "کلمه‌یاب — یافتن کلمه از حروف",
+  "short_name": "کلمه‌یاب",
   "lang": "fa",
   "start_url": "/?utm_source=homescreen",
   "display": "standalone",

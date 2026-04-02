@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>فیلتر کلمات | ابزار بازی امیرزا</title>
+  <title>کلمه‌یاب | پیدا کردن کلمه از روی حروف</title>
 
   <!-- icons -->
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
@@ -15,12 +15,35 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#2563eb">
 
-  <meta name="description" content="فیلتر کلمات برای بازی‌هایی مثل امیرزا، استاد میرزا، رقابت آنلاین." />
+  <meta name="description" content="با وارد کردن حروف، همهٔ کلمات ممکن را ببینید؛ مناسب بازی‌های حدس‌کلمه و جدول حرفی." />
   <meta name="author" content="Mehdi Dalvand" />
+
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="کلمه‌یاب, یافتن کلمه از حروف, ساخت کلمه فارسی, حل بازی کلمات, کلمات فارسی, بازی کلمه‌ای, جدول کلمات, حدس کلمه" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="کلمه‌یاب | یافتن کلمات از روی حروف" />
+  <meta property="og:description" content="با وارد کردن حروف، همهٔ کلمات ممکن را پیدا کن. مناسب بازی‌های کلمه‌ای و جدول." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://amirza-answers.github.io" />
+  <meta property="og:image" content="https://amirza-answers.github.io/icons/android-chrome-512x512.png" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="کلمه‌یاب | یافتن کلمات از روی حروف" />
+  <meta name="twitter:description" content="حروف بده، کلمه بگیر. سریع و ساده برای بازی‌های کلمه‌ای." />
+  <meta name="twitter:image" content="https://amirza-answers.github.io/icons/android-chrome-512x512.png" />
+  
+  <!-- canonical -->
+  <link rel="canonical" href="https://amirza-answers.github.io" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link href="/dist/assets/css/styles.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 p-4 font-sans">
+<body class="bg-gradient-to-b from-slate-100 to-slate-200/80 min-h-screen font-sans text-gray-900 antialiased overflow-x-hidden px-4 pt-6 pb-28 sm:px-5 sm:pt-8 sm:pb-32">
 
   <!-- iOS install hint -->
   <div id="ios-install" class="fixed bottom-0 left-0 right-0 bg-blue-50 p-4 text-center hidden">
@@ -33,7 +56,7 @@
   <!-- SEO / feature modal -->
   <div id="seo-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-xl max-w-md w-full p-6 space-y-4 shadow-xl">
-      <h2 class="text-xl font-bold text-center">راهنمای ابزار فیلتر کلمات</h2>
+      <h2 class="text-xl font-bold text-center">راهنمای کلم‌یاب</h2>
       <div class="text-gray-700 text-sm leading-7 bg-blue-50 border border-blue-200 rounded-lg p-4">
         <p class="mb-2">
           این ابزار برای فیلتر کلمات در بازی‌هایی مثل <strong class="text-blue-700">امیرزا</strong>
@@ -41,7 +64,7 @@
           و همچنین <strong class="text-blue-700">باقلوا</strong> طراحی شده است.
         </p>
         <p>
-          کافی‌ست حروف دلخواه را وارد کرده و حداقل و حداکثر طول کلمه را انتخاب کنید تا کلمات معتبر نمایش داده شوند.
+          حروف روی تخته را وارد کنید، طول کلمه را با تیک‌ها مشخص کنید و روی «نمایش کلمات» بزنید تا فهرست آماده شود.
         </p>
       </div>
       <div class="flex items-center gap-2">
@@ -53,40 +76,65 @@
   </div>
 
   <!-- Main app container -->
-  <div id="app" class="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 space-y-6">
-    <h1 class="text-2xl font-bold text-center">فیلتر کلمات امیرزا</h1>
+  <div id="app" class="w-full min-w-0 max-w-md mx-auto bg-white shadow-xl shadow-slate-300/40 rounded-2xl p-6 sm:p-8 space-y-8 ring-1 ring-slate-200/60">
+    <header class="text-center space-y-2.5 px-2 pt-1">
+      <h1 class="text-2xl sm:text-[1.7rem] font-bold tracking-tight text-slate-800">کلم‌یاب</h1>
+      <p class="text-sm sm:text-[0.9375rem] text-slate-600 leading-relaxed max-w-[19rem] mx-auto">
+        حروف را بنویس؛ بگذار همهٔ ترکیب‌های درست، یک‌جا جلو بیایند.
+      </p>
+    </header>
 
-    <input
-      id="allowed"
-      placeholder="حروف مجاز"
-      class="w-full p-3 border rounded-lg text-lg bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
-    />
-
-    <div class="flex flex-col sm:flex-row gap-4">
-      <div id="min-wrapper" class="flex items-center justify-between flex-1 border rounded-lg overflow-hidden">
-        <button onclick="step('min', -1)" class="w-12 h-12 bg-gray-200 hover:bg-gray-300 text-xl">−</button>
-        <input id="min" type="number" value="3" oninput="validateMinMax()" class="text-center w-full h-12 text-lg outline-none" />
-        <button onclick="step('min', 1)" class="w-12 h-12 bg-gray-200 hover:bg-gray-300 text-xl">+</button>
-      </div>
-      <div id="max-wrapper" class="flex items-center justify-between flex-1 border rounded-lg overflow-hidden">
-        <button onclick="step('max', -1)" class="w-12 h-12 bg-gray-200 hover:bg-gray-300 text-xl">−</button>
-        <input id="max" type="number" value="7" oninput="validateMinMax()" class="text-center w-full h-12 text-lg outline-none" />
-        <button onclick="step('max', 1)" class="w-12 h-12 bg-gray-200 hover:bg-gray-300 text-xl">+</button>
-      </div>
+    <div class="space-y-2.5 px-1">
+      <label for="allowed" class="block text-sm font-medium text-slate-600 mr-0.5">حروف روی تخته</label>
+      <input
+        id="allowed"
+        type="text"
+        inputmode="text"
+        autocomplete="off"
+        placeholder="مثلاً برسیماتون"
+        class="w-full min-w-0 box-border px-4 py-3.5 border border-slate-200 rounded-xl text-base sm:text-lg bg-slate-50 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 focus:bg-white transition"
+      />
     </div>
 
-    <button
-      id="run-btn"
-      onclick="filter()"
-      class="w-full py-3 rounded-lg text-lg font-semibold bg-blue-600 text-white shadow hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
-    >
-      اجرا
-    </button>
+    <fieldset class="rounded-2xl border border-slate-200/90 bg-slate-50/50 p-4 sm:p-5 shadow-inner space-y-3">
+      <legend class="text-sm font-semibold text-slate-700 px-2 mr-0.5">طول کلمه</legend>
+      <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed px-1 -mt-1 mb-0.5">حداقل یکی را فعال کن.</p>
+      <div class="grid grid-cols-3 gap-2 sm:gap-2.5">
+        <label class="flex flex-col items-center justify-center gap-2 cursor-pointer rounded-xl border border-slate-100 bg-white px-2 py-3 sm:py-3.5 shadow-sm hover:border-blue-200/90 hover:shadow active:scale-[0.98] transition min-h-[4.25rem] sm:min-h-0" title="سه‌حرفی">
+          <input type="checkbox" id="len-3" checked class="len-opt w-4 h-4 sm:w-[1.05rem] sm:h-[1.05rem] shrink-0 rounded border-slate-300 text-blue-600 focus:ring-2 focus:ring-blue-400" onchange="validateLengthOpts()" />
+          <span class="text-center text-[11px] sm:text-xs font-medium text-slate-700 select-none leading-tight">سه‌حرفی</span>
+        </label>
+        <label class="flex flex-col items-center justify-center gap-2 cursor-pointer rounded-xl border border-slate-100 bg-white px-2 py-3 sm:py-3.5 shadow-sm hover:border-violet-200/90 hover:shadow active:scale-[0.98] transition min-h-[4.25rem] sm:min-h-0" title="چهارحرفی">
+          <input type="checkbox" id="len-4" checked class="len-opt w-4 h-4 sm:w-[1.05rem] sm:h-[1.05rem] shrink-0 rounded border-slate-300 text-violet-600 focus:ring-2 focus:ring-violet-400" onchange="validateLengthOpts()" />
+          <span class="text-center text-[11px] sm:text-xs font-medium text-slate-700 select-none leading-tight">چهارحرفی</span>
+        </label>
+        <label class="flex flex-col items-center justify-center gap-2 cursor-pointer rounded-xl border border-slate-100 bg-white px-1.5 py-3 sm:py-3.5 shadow-sm hover:border-emerald-200/90 hover:shadow active:scale-[0.98] transition min-h-[4.25rem] sm:min-h-0" title="پنج‌حرفی و بیشتر">
+          <input type="checkbox" id="len-5p" checked class="len-opt w-4 h-4 sm:w-[1.05rem] sm:h-[1.05rem] shrink-0 rounded border-slate-300 text-emerald-600 focus:ring-2 focus:ring-emerald-400" onchange="validateLengthOpts()" />
+          <span class="text-center text-[10px] sm:text-[11px] font-medium text-slate-700 select-none leading-snug px-0.5">پنج‌حرفی به بالا</span>
+        </label>
+      </div>
+    </fieldset>
 
-    <ul
-      id="out"
-      class="list-decimal list-inside bg-gray-50 text-base rounded-lg p-4 h-72 overflow-y-auto break-words space-y-1 border border-gray-200"
-    ></ul>
+    <div class="pt-2">
+      <button
+        type="button"
+        id="run-btn"
+        onclick="filter()"
+        class="w-full min-w-0 py-3.5 sm:py-4 rounded-xl text-base sm:text-lg font-semibold bg-blue-600 text-white shadow-lg shadow-blue-600/25 hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition"
+      >
+        نمایش کلمات
+      </button>
+    </div>
+
+    <div class="space-y-3 px-1 pt-2 border-t border-slate-100">
+      <p class="text-sm font-medium text-slate-600 mr-0.5">نتایج</p>
+      <div
+        id="out"
+        class="word-tags w-full min-w-0 max-w-full box-border flex flex-wrap gap-x-2 gap-y-2.5 content-start items-start justify-start min-h-[5rem] py-1 sm:py-2"
+        role="status"
+        aria-live="polite"
+      ></div>
+    </div>
   </div>
 
   <!-- PWA install button -->
@@ -99,13 +147,13 @@
 
   <!-- Scripts -->
   <script>
-    // Load word list
-    let words = [];
-    fetch('/words')
-      .then(r => r.text())
-      .then(text => words = text.split('\n').map(w => w.trim()).filter(Boolean));
+    // Load word map: normalized key (no whitespace) -> display form from list
+    let wordMap = {};
+    fetch('/words.json')
+      .then(r => r.json())
+      .then(obj => { wordMap = obj; });
 
-    // Normalize Persian letters
+    // Normalize Persian letters (must match scripts/build-words-json.mjs)
     function normalize(s) {
       return s
         .replace(/[إأآٱ]/g, 'ا')
@@ -117,52 +165,93 @@
         .replace(/‌/g, '');
     }
 
-    // Increment/decrement handlers
-    function step(id, delta) {
-      const el = document.getElementById(id);
-      el.value = Math.max(0, (+el.value || 0) + delta);
-      validateMinMax();
+    const CHIP_STYLES = [
+      'bg-sky-100 text-sky-950',
+      'bg-pink-100 text-pink-950',
+      'bg-emerald-100 text-emerald-950',
+      'bg-violet-100 text-violet-950',
+      'bg-cyan-100 text-cyan-950',
+      'bg-amber-100 text-amber-950',
+    ];
+
+    function escHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
     }
 
-    // Validate min < max
-    function validateMinMax() {
-      const minEl = document.getElementById('min');
-      const maxEl = document.getElementById('max');
+    function escAttr(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function matchesLength(len, len3, len4, len5p) {
+      if (len === 3) return len3;
+      if (len === 4) return len4;
+      if (len >= 5) return len5p;
+      return false;
+    }
+
+    function validateLengthOpts() {
       const runBtn = document.getElementById('run-btn');
-      const minWrapper = document.getElementById('min-wrapper');
-      const maxWrapper = document.getElementById('max-wrapper');
-      const min = +minEl.value;
-      const max = +maxEl.value;
-      const valid = min < max;
-      minWrapper.classList.toggle('border-red-500', !valid);
-      maxWrapper.classList.toggle('border-red-500', !valid);
+      const len3 = document.getElementById('len-3').checked;
+      const len4 = document.getElementById('len-4').checked;
+      const len5p = document.getElementById('len-5p').checked;
+      const valid = len3 || len4 || len5p;
       runBtn.disabled = !valid;
       runBtn.classList.toggle('opacity-50', !valid);
       runBtn.classList.toggle('cursor-not-allowed', !valid);
     }
 
-    // Filter words based on allowed letters and length
+    function renderChips(words) {
+      const out = document.getElementById('out');
+      if (!words.length) {
+        out.innerHTML = '<span class="w-full text-center text-slate-500 text-sm py-6 block px-2">موردی پیدا نشد</span>';
+        return;
+      }
+      const chipBase =
+        'basis-auto min-w-0 max-w-full shrink rounded-full px-4 py-2.5 text-sm font-medium leading-snug whitespace-nowrap overflow-hidden text-ellipsis shadow-sm ring-1 ring-black/5';
+      out.innerHTML = words
+        .map(
+          (w, i) => {
+            const t = escAttr(w);
+            return `<span title="${t}" class="${chipBase} ${CHIP_STYLES[i % CHIP_STYLES.length]}">${escHtml(w)}</span>`;
+          }
+        )
+        .join('');
+    }
+
+    // Filter words based on allowed letters and length buckets
     function filter() {
       const a = normalize(document.getElementById('allowed').value.trim());
-      const minVal = +document.getElementById('min').value;
-      const maxVal = +document.getElementById('max').value;
+      const len3 = document.getElementById('len-3').checked;
+      const len4 = document.getElementById('len-4').checked;
+      const len5p = document.getElementById('len-5p').checked;
+      if (!len3 && !len4 && !len5p) {
+        renderChips([]);
+        return;
+      }
       const cnt = {};
       const res = [];
       for (const c of a) cnt[c] = (cnt[c] || 0) + 1;
-      for (const w0 of words) {
-        const w = normalize(w0);
-        if (w.length < minVal || w.length > maxVal) continue;
+      for (const key of Object.keys(wordMap)) {
+        const L = key.length;
+        if (!matchesLength(L, len3, len4, len5p)) continue;
         let ok = true;
         const used = {};
-        for (const c of w) {
+        for (const c of key) {
           if (!cnt[c] || (used[c] || 0) + 1 > cnt[c]) { ok = false; break; }
           used[c] = (used[c] || 0) + 1;
         }
-        if (ok) res.push(w);
+        if (ok) res.push(wordMap[key]);
       }
-      document.getElementById('out').innerHTML = res.length
-        ? res.map(w => `<li>${w}</li>`).join('')
-        : '<li>موردی پیدا نشد</li>';
+      renderChips(res);
     }
 
     // Close the SEO modal
@@ -177,7 +266,7 @@
       if (localStorage.getItem('amirza-seo-modal') !== 'hide') {
         document.getElementById('seo-modal').classList.remove('hidden');
       }
-      validateMinMax();
+      validateLengthOpts();
     });
 
     // PWA beforeinstallprompt handling

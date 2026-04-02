@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "build": "npm run build:css",
-    "build:css": "tailwindcss -i ./src/styles/main.css -o ./dist/assets/css/styles.css --minify"
+    "build:css": "tailwindcss -i ./src/styles/main.css -o ./dist/assets/css/styles.css --minify",
+    "build:words": "node scripts/build-words-json.mjs"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.27",
